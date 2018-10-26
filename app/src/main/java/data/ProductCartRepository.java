@@ -28,6 +28,10 @@ public class ProductCartRepository {
         new insertAsyncTask(productCartDao).execute(productCart);
     }
 
+    public void deleteAll() {
+        new deleteAsyncTask(productCartDao).execute();
+    }
+
     private static class insertAsyncTask extends AsyncTask<ProductCart, Void, Void> {
 
         private ProductCartDao mAsyncTaskDao;
@@ -39,6 +43,21 @@ public class ProductCartRepository {
         @Override
         protected Void doInBackground(final ProductCart... params) {
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        private ProductCartDao mAsyncTaskDao;
+
+        deleteAsyncTask(ProductCartDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
             return null;
         }
     }

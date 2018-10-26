@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application android:theme="@style/AppTheme" android:roundIcon="@mipmap/ic_launcher">
-        <activity android:name=".MainActivity">
+        <activity android:name=".CartActivity">
 
         </activity>
         <activity android:name=".RetailLandingActivity" android:screenOrientation="portrait">

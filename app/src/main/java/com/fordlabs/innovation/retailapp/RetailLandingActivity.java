@@ -33,14 +33,6 @@ public class RetailLandingActivity extends AppCompatActivity {
                 new ViewModelProviderFactory(this.getApplication());
         viewModel = ViewModelProviders.of(this, factory).get(RetailLandingViewModel.class);
         binding.setViewModel(viewModel);
-        viewModel.getData().observe(this, new Observer<List<ProductCart>>() {
-            @Override
-            public void onChanged(@Nullable List<ProductCart> productCarts) {
-                for (ProductCart productCart : productCarts) {
-                    viewModel.setData(productCart.getProductItemViewModel());
-                }
-            }
-        });
     }
 
     class ViewModelProviderFactory implements ViewModelProvider.Factory {
