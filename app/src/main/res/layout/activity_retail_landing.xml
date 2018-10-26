@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary"
+            android:background="@android:color/holo_green_light"
             android:minHeight="?attr/actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,13 +30,14 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tv"
+                    android:id="@+id/title"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center_vertical"
-                    android:text="Retail App"
-                    android:textColor="@android:color/white"
-                    android:textSize="20sp"
+                    android:text="RETAIL APP"
+                    android:textColor="@color/title_color_pink"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -44,9 +45,11 @@
 
                 <ImageView
                     android:id="@+id/cart_icon"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/cart"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:onClick="@{(v)->viewModel.launchCart(v)}"
+                    android:src="@drawable/ic_shopping_cart"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,20 +62,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:paddingBottom="?attr/actionBarSize"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
+            android:paddingBottom="?attr/actionBarSize"
             app:adapter="@{viewModel.adapter}"
+            app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_horizontal_bottom"
+            app:layout_constraintVertical_bias="0.1"
             app:reverseLayout="true" />
 
-        <TextView
+       <!-- <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@={viewModel.textArea}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_view"
-            tools:text="Hiii" />
+            tools:text="Hiii" />-->
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_left"
@@ -87,6 +94,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.97" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_horizontal_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95"/>
 
     </android.support.constraint.ConstraintLayout>
 </layout>
