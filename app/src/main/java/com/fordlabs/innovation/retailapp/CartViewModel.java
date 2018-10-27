@@ -28,7 +28,6 @@ public class CartViewModel extends AndroidViewModel {
         cartItemViewModelList = new ArrayList<>();
         productCartRepository = new ProductCartRepository(application);
         cartItemAdapter = new CartItemAdapter(this);
-        getData();
     }
 
     public LiveData<List<ProductCart>> getData() {
