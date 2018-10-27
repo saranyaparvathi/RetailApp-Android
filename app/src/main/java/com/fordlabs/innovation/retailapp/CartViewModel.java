@@ -21,7 +21,7 @@ public class CartViewModel extends AndroidViewModel {
     private ProductCartRepository productCartRepository;
     private CartItemAdapter cartItemAdapter;
     private int price = 0;
-    private String modifiedPrice = "Total : Rs. ";
+    private String modifiedPrice;
 
     public CartViewModel(Application application) {
         super(application);
@@ -48,7 +48,7 @@ public class CartViewModel extends AndroidViewModel {
         cartItemViewModelList.add(new CartItemViewModel(productItemViewModel.getProductName(),
                 productItemViewModel.getProductPrice()));
         price += Integer.valueOf(productItemViewModel.getProductPrice());
-        modifiedPrice = "Rs:" + price;
+        modifiedPrice = "Total : Rs." + price;
         totalPrice.set("");
         totalPrice.set(modifiedPrice);
         cartItemAdapter.setItems(cartItemViewModelList);
