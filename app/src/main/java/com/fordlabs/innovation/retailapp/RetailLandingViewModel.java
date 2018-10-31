@@ -34,6 +34,13 @@ public class RetailLandingViewModel extends AndroidViewModel {
         context.startActivity(intent);
     }
 
+    public void launchProductDetails(View view, ProductItemViewModel productItemViewModel) {
+        Context context = view.getContext();
+        Intent intent = new Intent(context, ProductDetailsActivity.class);
+        intent.putExtra("product", productItemViewModel);
+        context.startActivity(intent);
+    }
+
     public LinkedHashMap<CategoryItemViewModel, List<ProductItemViewModel>> getSectionList() {
         sectionList.put(new CategoryItemViewModel("Furniture"), populateFurniture());
         sectionList.put(new CategoryItemViewModel("Electronics"), populateElectronics());

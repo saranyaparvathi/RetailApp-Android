@@ -38,7 +38,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<ProductCart> productCarts) {
                 for (ProductCart productCart : productCarts) {
-                    viewModel.setData(productCart.getProductItemViewModel());
+                    viewModel.setData(productCart);
                 }
             }
         });

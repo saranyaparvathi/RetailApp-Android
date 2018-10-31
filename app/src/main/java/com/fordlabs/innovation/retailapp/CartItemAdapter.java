@@ -2,6 +2,7 @@ package com.fordlabs.innovation.retailapp;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -14,12 +15,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
 
     private List<CartItemViewModel> cartItemViewModelList;
     private CartViewModel cartViewModel;
+    private CartItemViewHolder cartItemViewHolder;
 
     public CartItemAdapter(CartViewModel cartViewModel) {
         this.cartViewModel = cartViewModel;
         cartItemViewModelList = new ArrayList<>();
-        cartItemViewModelList.addAll(this.cartViewModel.populateData());
-        notifyDataSetChanged();
     }
 
     @NonNull
@@ -32,9 +32,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CartItemViewHolder holder, int i) {
+        cartItemViewHolder = holder;
         CartItemViewModel cartItemViewModel = getItemForPosition(i);
-        holder.bind(cartItemViewModel);
-
+        holder.bind(cartItemViewModel, cartViewModel);
     }
 
     @Override
@@ -48,7 +48,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemViewHolder> {
     }
 
     public void setItems(List<CartItemViewModel> itemViewModelList) {
-        this.cartItemViewModelList = itemViewModelList;
+        this.cartItemViewModelList.clear();
+        this.cartItemViewModelList.addAll(itemViewModelList);
+        notifyDataSetChanged();
+    }
+
+    public void deleteItem(CartItemViewModel cartItemViewModel) {
+        Log.d("position", "" + cartItemViewModel.getProductName() + " " + cartItemViewModel.getId());
+        int position = cartItemViewModelList.indexOf(cartItemViewModel);
+        cartItemViewModelList.remove(position);
         notifyDataSetChanged();
     }
 

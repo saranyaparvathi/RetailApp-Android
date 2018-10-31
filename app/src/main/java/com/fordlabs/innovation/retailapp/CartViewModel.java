@@ -16,12 +16,13 @@ public class CartViewModel extends AndroidViewModel {
 
     public ObservableBoolean isCartPresent = new ObservableBoolean(false);
     public ObservableField<String> totalPrice = new ObservableField<>();
+    public ObservableBoolean totalPriceVisibility = new ObservableBoolean(false);
 
     private List<CartItemViewModel> cartItemViewModelList;
     private ProductCartRepository productCartRepository;
     private CartItemAdapter cartItemAdapter;
     private int price = 0;
-    private String modifiedPrice;
+    private boolean isProductDeleted;
 
     public CartViewModel(Application application) {
         super(application);
@@ -35,23 +36,25 @@ public class CartViewModel extends AndroidViewModel {
     }
 
     public void deleteAll() {
-        price = 0;
+        refreshCartValues();
         productCartRepository.deleteAll();
+        totalPriceVisibility.set(false);
         isCartPresent.set(false);
     }
 
-    public void setData(ProductItemViewModel productItemViewModel) {
+    public void setData(ProductCart productCart) {
+        if (isProductDeleted) {
+            refreshCartValues();
+            isProductDeleted = false;
+        }
+        ProductItemViewModel productItemViewModel = productCart.getProductItemViewModel();
         if (!isCartPresent.get()) {
             isCartPresent.set(true);
         }
-        cartItemViewModelList.add(new CartItemViewModel(productItemViewModel.getProductName(),
-                productItemViewModel.getProductPrice()));
+        cartItemViewModelList.add(new CartItemViewModel(productCart.getId(), productItemViewModel));
         price += Integer.valueOf(productItemViewModel.getProductPrice());
-        modifiedPrice = "Total : Rs." + price;
-        totalPrice.set("");
-        totalPrice.set(modifiedPrice);
+        setTotalPrice(price);
         cartItemAdapter.setItems(cartItemViewModelList);
-        cartItemAdapter.notifyDataSetChanged();
     }
 
     public List<CartItemViewModel> populateData() {
@@ -61,5 +64,26 @@ public class CartViewModel extends AndroidViewModel {
 
     public CartItemAdapter getAdapter() {
         return cartItemAdapter;
+    }
+
+    public void deleteProductFromCart(CartItemViewModel cartItemViewModel) {
+        isProductDeleted = true;
+        productCartRepository.deleteProduct(new ProductCart(cartItemViewModel.getId(), cartItemViewModel.getProductItemViewModel()));
+        price -= Integer.valueOf(cartItemViewModel.getProductPrice());
+        isCartPresent.set(price > 0);
+        cartItemAdapter.deleteItem(cartItemViewModel);
+        setTotalPrice(price);
+    }
+
+    private void setTotalPrice(int price) {
+        totalPriceVisibility.set(price > 0);
+        totalPrice.set("");
+        totalPrice.set("Total : Rs." + price);
+    }
+
+    private void refreshCartValues() {
+        cartItemViewModelList.clear();
+        price = 0;
+        totalPrice.set("");
     }
 }

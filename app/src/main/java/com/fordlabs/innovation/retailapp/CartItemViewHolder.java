@@ -15,8 +15,9 @@ public class CartItemViewHolder extends RecyclerView.ViewHolder {
         binding.executePendingBindings();
     }
 
-    public void bind(CartItemViewModel itemViewModel) {
+    public void bind(CartItemViewModel itemViewModel, CartViewModel cartViewModel) {
         binding.setItemViewModel(itemViewModel);
+        binding.setViewModel(cartViewModel);
         binding.executePendingBindings();
     }
 }
